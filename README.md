@@ -72,6 +72,9 @@ git remote add origin https://github.com/kindservices/kind-test-widget.git
 git push -u origin main
 ```
 
+With our dockerhub repo ready, and our code into our new github repo, we can see the generated github action work its magic and push our image:
+
+![Build Image](./github_action_build.png)
 
 ## Setting up
 To create this template, we followed the instructions on [foundweekends.org/giter8](https://www.foundweekends.org/giter8/setup.html), which were to:
