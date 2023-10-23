@@ -1,3 +1,5 @@
+[github pages](https://kindservices.github.io/datamesh-widget-svelte.g8/) | [repo](https://github.com/kindservices/datamesh-widget-svelte.g8) | [kind services](https://www.kindservices.co.uk)
+
 # About
 
 The premise of the data-mesh is that it would be cheap and easy to create small, single-purpose widgets.
