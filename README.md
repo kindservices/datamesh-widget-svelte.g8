@@ -4,11 +4,11 @@
 
 The premise of the data-mesh is that it would be cheap and easy to create small, single-purpose widgets.
 
-This template is an attempt to deliver on that promise. In a matter of seconds or minutes, somebody could:
+This template is an attempt to deliver on that promise. You can get a new widget up and running in minutes by:
 
-1) use this template to bootstrap a new svelte widget
-2) create a corresponding dockerhub repository
-2) push their new widget to a new github repository which then publishes to dockerhub
+1) using this template to bootstrap a new svelte widget
+2) create a corresponding dockerhub repository to push the widget
+2) push the code to a new github repo to trigger the github action which publishes the code to dockerhub
 
 This is possible within any organisation such as Kind which has organisation-level authorisation for github to push to dockerhub.
 
