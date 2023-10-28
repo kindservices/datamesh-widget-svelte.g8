@@ -10,17 +10,22 @@ build() {
     echo "Built \$IMG. To run:"
     echo ""
     echo "docker run --rm -name $widget$ -it -p \$PORT:80 \$IMG"
+    echo "    docker run --rm --name $widget$ -d -it -p \$PORT:80 \$IMG"
     echo ""
     echo "And open http://localhost:\$PORT/bundle.js or http://localhost:\$PORT/bundle.css"
+    echo ""
+    echo "Once running, to manually test, open ./test/local-test.html or ./test/dynamic-test.html"
+    echo ""
 }
 
 dev() {
-    yarn
-    yarn dev
+    which pnpm || (echo "pnpm not installed. Try 'brew install pnpm'?" && exit 1)
+    pnpm install
+    pnpm dev
 }
 
 clean() {
-    yarn cache clean
+    pnpm store prune
 }
 
 run() {
