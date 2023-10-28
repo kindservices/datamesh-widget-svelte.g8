@@ -1,10 +1,11 @@
 [github pages](https://kindservices.github.io/datamesh-widget-svelte.g8/) | [repo](https://github.com/kindservices/datamesh-widget-svelte.g8) | [kind services](https://www.kindservices.co.uk)
 
+# Purpose 
+The premise of the data-mesh is that developers can easily create small, single-purpose widgets. They can create and test little "mini apps" with their own delivery and maintenance lifecycle, with minimal coupling/knowledge about the rest of the application, and without impacting other teams. (i.e., 'composition over inheritance' for teams).
+
 # About
 
-The premise of the data-mesh is that it would be cheap and easy to create small, single-purpose widgets.
-
-This template is an attempt to deliver on that promise. In a matter of seconds or minutes, somebody could:
+This template is an attempt to deliver on that promise. It is a [g8 teamplate](https://www.foundweekends.org/giter8/template.html) for new svelte widgets. The process would be:
 
 1) use this template to bootstrap a new svelte widget
 2) create a corresponding dockerhub repository
@@ -12,16 +13,21 @@ This template is an attempt to deliver on that promise. In a matter of seconds o
 
 This is possible within any organisation such as Kind which has organisation-level authorisation for github to push to dockerhub.
 
+**NOTE:** It's not necessary to use this template. The key parts are:
+ * the `k8s/web.yaml` which knows how to add a [service-registry](https://github.com/kindservices/datamesh-service-registry) [sidecar](https://medium.com/bb-tutorials-and-thoughts/kubernetes-learn-sidecar-container-pattern-6d8c21f873d)
+ * the convenience `Dockerfile` and `Makefile` for containerising and packaging
+ * the convenience `.github` actions for building pushing.
+
 
 # Usage
-## Step 1) Create the skeleton code for a new web component widget
+## Step 1: Use this template to create a new widget
 This template depends on [sbt new](https://www.scala-sbt.org/download.html):
 
 ```
 sbt new kindservices/datamesh-widget-svelte.g8
 ```
 
-Which prompts for the following properties:
+Which will prompt you for the following properties (or accept some defaults):
 
 * name
 
@@ -53,30 +59,30 @@ You can see in this test case that some special values were given and defaults c
 ![sbt template prompts](sbt-prompts.png)
 
 
-## Step 2) Create a dockerhub repo
+## Step 2: Create a dockerhub repo
 
-We're going to package up that code into a docker image, which we'll deploy to dockerhub.
+We need to publish our packaged docker image somewhere, for which we'll choose dockerhub.
 
 Create or log into your [dockerhub](https://hub.docker.com) account and create a repo with the same name as the 'image' you used in step 1:
 
 ![Create Dockerhub Repo](dockerhub-create-repo.png)
 
-## Step 3) Create a github repo and push
+## Step 3: Create a github repo and push your code
 
-We have the code, we have our dockerhub repo declared. We now need to create a github repo to store the sourcecode we generated in step 1, as well as kick off the github actions to create a container. 
+We now have the code, we have our dockerhub repo declared. We'll need now to create a github repo to store the sourcecode we generated in step 1, as well as kick off the github actions to create a container. 
 
 Log into [github](https://github.com) and create a matching repo with the same name that we used for our 'githubrepo' parameter above:
 
 ![Create Github Repo](create-repo.png)
 
-Github kindly tells us the git instructions to use for our new repo in its output. We just have to change directory (`cd`) into our new 'kind test' directory and execute a slightly modified version:
+Github kindly tells us the git instructions to use for our new repo in its output. We just have to change directory (`cd`) into our 'new-widget' directory and execute a slightly modified version:
 ```
-cd kind-test # <--- I added this step. The rest of the output comes from github
+cd 'new-widget # <--- I added this step. The rest of the output comes from github
 git init
 git add -A
 git commit -m "first kermit"
 git branch -M main
-git remote add origin https://github.com/kindservices/kind-test-widget.git
+git remote add origin https://github.com/<your org>/<the name of your widget>.git
 git push -u origin main
 ```
 
@@ -88,12 +94,14 @@ And if we go back over to dockerhub, we can see our pushed image:
 
 ![pushed image](./pushed_image.png)
 
-## Step 4) Deploying
+## Step 4: Deploying
 
 **Note:** This step assumes we have a working `kubectl` and `argocd`, which you can do by following [idea-labs/data-mesh/running](https://kindservices.github.io/idea-labs/data-mesh/running.html)
 
 
-We have our initial code pushed to github and generating an image. This has been our 'continuous integraton'. We're ready now to deploy it to our data-mesh by using the `make installArgo` command handily provided in our repo:
+We have our initial code pushed to github and generating an image. This has been our 'continuous integraton'. 
+
+We're ready now for our `continuous deployment` so we can actually deploy and run it in our data-mesh by using the `make installArgo` command handily provided in our repo:
 
 ![Install in Argo](./install_argo.png)
 
@@ -138,3 +146,5 @@ With `g8` installed, we can test locally like this:
 ```
 g8 file://. --name=uftest --force -o tmp-test
 ```
+
+Or simply run `make test`
