@@ -42,7 +42,7 @@ EOL
 }
 
 installArgo() {
-    APP=\${APP:-$name;format="Camel"$}
+    APP=\${APP:-$name;format="camel"$}
     BRANCH=\${BRANCH:-`git rev-parse --abbrev-ref HEAD`}
 
     echo "creating \$APP"
