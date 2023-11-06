@@ -1,4 +1,4 @@
-<svelte:options tag="$widget$" />
+<svelte:options customElement="$widget$" />
 
 <script>
   import Counter from "./Counter.svelte";
