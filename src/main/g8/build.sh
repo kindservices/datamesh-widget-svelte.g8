@@ -2,7 +2,8 @@
 export TAG=\${TAG:-local}
 export IMG=\${IMG:-$org$/$image$:\$TAG}
 export PORT=\${PORT:-3000}
-
+APP=\${APP:-$name;format="lower-camel"$}
+BRANCH=\${BRANCH:-`git rev-parse --abbrev-ref HEAD`}
 
 build() {
     echo "Building \$IMG..."
@@ -41,13 +42,14 @@ EOL
     echo "Running on port \$PORT --- stop server using ./kill.sh"
 }
 
-installArgo() {
-    APP=\${APP:-$name;format="camel"$}
-    BRANCH=\${BRANCH:-`git rev-parse --abbrev-ref HEAD`}
+uninstallArgo() {
+    argocd app delete \$APP --cascade
+}
 
+installArgo() {
     echo "creating \$APP"
     
-    kubectl create namespace $k8namespace$ > /dev/null
+    kubectl create namespace $k8namespace$ 2> /dev/null
 
     # beast mode :-)
     argocd app create \$APP \
