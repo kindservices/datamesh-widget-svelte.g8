@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: $widget;format="lower,hyphen"$-web
-        image: $org;format="lower"$/$image$:latest
+        image: $org;format="lower"$/$image$:latest-build
         imagePullPolicy: Always
         ports:
         - containerPort: 80
